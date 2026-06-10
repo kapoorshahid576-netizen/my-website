@@ -1,0 +1,1187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MoverseAI – Dark History Videos on Autopilot</title>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700;900&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg:#09090b; --bg2:#111116; --bg3:#18181f; --bg4:#222230;
+  --border:rgba(255,255,255,0.07); --border2:rgba(255,255,255,0.13);
+  --text:#f0ede8; --muted:#888; --dim:#555;
+  --red:#b91c1c; --red2:#dc2626; --red3:#f87171;
+  --gold:#b8960c; --gold2:#f0c040;
+  --green:#16a34a; --green2:#4ade80;
+  --blue:#1d4ed8; --blue2:#60a5fa;
+  --purple:#7c3aed; --purple2:#a78bfa;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;font-size:16px;line-height:1.6;overflow-x:hidden;}
+
+/* PAGES */
+.page{display:none;min-height:100vh;}
+.page.active{display:block;}
+
+/* ===== NAV ===== */
+nav{position:fixed;top:0;left:0;right:0;z-index:200;background:rgba(9,9,11,0.93);backdrop-filter:blur(14px);border-bottom:1px solid var(--border);padding:0 2rem;height:62px;display:flex;align-items:center;justify-content:space-between;}
+.nav-logo{font-family:'Cinzel',serif;font-size:1.25rem;font-weight:900;color:var(--text);cursor:pointer;letter-spacing:.04em;}
+.nav-logo span{color:var(--red2);}
+.nav-links{display:flex;gap:1.75rem;align-items:center;}
+.nav-links a{color:var(--muted);text-decoration:none;font-size:.875rem;transition:color .2s;cursor:pointer;}
+.nav-links a:hover{color:var(--text);}
+.nav-auth{display:flex;gap:.75rem;align-items:center;}
+.btn-nav-ghost{background:transparent;color:var(--text);padding:.42rem 1rem;border-radius:7px;font-size:.875rem;border:1px solid var(--border2);cursor:pointer;transition:all .2s;}
+.btn-nav-ghost:hover{background:var(--bg3);}
+.btn-nav-red{background:var(--red);color:#fff;padding:.42rem 1.1rem;border-radius:7px;font-size:.875rem;border:none;cursor:pointer;transition:background .2s;font-weight:500;}
+.btn-nav-red:hover{background:var(--red2);}
+
+/* ===== SHARED BUTTONS ===== */
+.btn-primary{background:var(--red);color:#fff;padding:.85rem 2rem;border-radius:8px;font-size:1rem;font-weight:500;border:none;cursor:pointer;transition:all .2s;display:inline-block;text-decoration:none;}
+.btn-primary:hover{background:var(--red2);transform:translateY(-1px);}
+.btn-ghost{background:transparent;color:var(--text);padding:.85rem 2rem;border-radius:8px;font-size:1rem;border:1px solid var(--border2);cursor:pointer;transition:all .2s;display:inline-block;text-decoration:none;}
+.btn-ghost:hover{border-color:rgba(255,255,255,.25);background:var(--bg3);}
+.btn-sm{padding:.5rem 1.1rem;font-size:.85rem;border-radius:7px;}
+
+/* ===== LANDING PAGE ===== */
+/* Hero */
+.hero{min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:8rem 2rem 5rem;position:relative;overflow:hidden;}
+.hero::before{content:'';position:absolute;top:20%;left:50%;transform:translateX(-50%);width:700px;height:700px;background:radial-gradient(circle,rgba(185,28,28,.09) 0%,transparent 70%);pointer-events:none;}
+.hero-badge{display:inline-flex;align-items:center;gap:8px;background:rgba(185,28,28,.1);border:1px solid rgba(185,28,28,.28);border-radius:20px;padding:.35rem 1rem;font-size:.78rem;color:var(--red3);letter-spacing:.09em;text-transform:uppercase;margin-bottom:2rem;}
+.hero-badge::before{content:'●';font-size:.5rem;animation:blink 2s infinite;}
+@keyframes blink{0%,100%{opacity:1;}50%{opacity:.25;}}
+.hero h1{font-family:'Cinzel',serif;font-size:clamp(2.4rem,7vw,5.2rem);font-weight:900;line-height:1.06;letter-spacing:-.01em;margin-bottom:1.5rem;max-width:880px;}
+.hero h1 .r{color:var(--red2);} .hero h1 .g{color:var(--gold2);}
+.hero-sub{font-size:1.1rem;color:var(--muted);max-width:540px;margin:0 auto 2.5rem;font-weight:300;}
+.hero-btns{display:flex;gap:1rem;flex-wrap:wrap;justify-content:center;margin-bottom:4rem;}
+.hero-stats{display:flex;gap:3rem;flex-wrap:wrap;justify-content:center;}
+.hstat .n{font-family:'Cinzel',serif;font-size:2rem;font-weight:700;}
+.hstat .l{font-size:.78rem;color:var(--dim);letter-spacing:.05em;margin-top:2px;}
+
+/* Ticker */
+.ticker{background:var(--bg2);border-top:1px solid var(--border);border-bottom:1px solid var(--border);padding:.9rem 0;overflow:hidden;}
+.ticker-inner{display:flex;gap:1rem;animation:ticker 30s linear infinite;white-space:nowrap;width:max-content;}
+@keyframes ticker{0%{transform:translateX(0);}100%{transform:translateX(-50%);}}
+.tick-tag{display:inline-flex;align-items:center;gap:6px;background:var(--bg3);border:1px solid var(--border);border-radius:20px;padding:.32rem 1rem;font-size:.78rem;color:var(--muted);flex-shrink:0;}
+.tick-dot{width:6px;height:6px;border-radius:50%;background:var(--red);}
+
+/* Sections */
+.lsec{padding:5.5rem 2rem;max-width:1100px;margin:0 auto;}
+.sec-label{font-size:.73rem;letter-spacing:.16em;text-transform:uppercase;color:var(--red3);margin-bottom:.9rem;}
+.sec-title{font-family:'Cinzel',serif;font-size:clamp(1.7rem,4vw,2.7rem);font-weight:700;margin-bottom:1rem;line-height:1.15;}
+.sec-sub{color:var(--muted);font-size:1rem;max-width:540px;font-weight:300;}
+.divider{height:1px;background:var(--border);max-width:1100px;margin:0 auto;}
+
+/* Features */
+.feat-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:1.5px;margin-top:3.5rem;background:var(--border);border:1px solid var(--border);border-radius:12px;overflow:hidden;}
+.feat-card{background:var(--bg2);padding:2rem;transition:background .2s;}
+.feat-card:hover{background:var(--bg3);}
+.feat-ico{width:44px;height:44px;border-radius:10px;background:rgba(185,28,28,.1);border:1px solid rgba(185,28,28,.2);display:flex;align-items:center;justify-content:center;font-size:1.3rem;margin-bottom:1.2rem;}
+.feat-card h3{font-size:1rem;font-weight:600;margin-bottom:.45rem;}
+.feat-card p{font-size:.875rem;color:var(--muted);line-height:1.6;}
+
+/* Steps */
+.steps{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:2rem;margin-top:3rem;}
+.step-num{font-family:'Cinzel',serif;font-size:3rem;font-weight:900;color:rgba(185,28,28,.15);line-height:1;margin-bottom:.75rem;}
+.step h3{font-size:1rem;font-weight:600;margin-bottom:.45rem;}
+.step p{font-size:.875rem;color:var(--muted);}
+
+/* Categories */
+.cats-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:1rem;margin-top:3rem;}
+.cat-card{background:var(--bg2);border:1px solid var(--border);border-radius:10px;padding:1.25rem;text-align:center;cursor:pointer;transition:all .2s;}
+.cat-card:hover{border-color:rgba(185,28,28,.45);background:rgba(185,28,28,.05);transform:translateY(-2px);}
+.cat-emoji{font-size:1.8rem;margin-bottom:.5rem;}
+.cat-card h4{font-size:.83rem;font-weight:500;margin-bottom:.2rem;}
+.cat-meta{font-size:.72rem;color:var(--dim);}
+
+/* Testimonials */
+.testi-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:1.25rem;margin-top:3rem;}
+.testi{background:var(--bg2);border:1px solid var(--border);border-radius:12px;padding:1.5rem;}
+.testi p{font-size:.88rem;color:var(--text);line-height:1.65;margin-bottom:1rem;font-style:italic;}
+.testi-author{display:flex;align-items:center;gap:10px;}
+.tav{width:32px;height:32px;border-radius:50%;background:var(--bg4);display:flex;align-items:center;justify-content:center;font-size:.73rem;font-weight:600;color:var(--red3);flex-shrink:0;}
+.testi-name{font-size:.84rem;font-weight:500;}
+.testi-handle{font-size:.73rem;color:var(--dim);}
+
+/* Pricing */
+.price-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:1.5rem;margin-top:3rem;}
+.price-card{background:var(--bg2);border:1px solid var(--border);border-radius:14px;padding:2rem;position:relative;}
+.price-card.featured{border-color:rgba(185,28,28,.5);background:linear-gradient(135deg,rgba(185,28,28,.06),var(--bg2));}
+.price-badge{position:absolute;top:-12px;left:50%;transform:translateX(-50%);background:var(--red);color:#fff;font-size:.7rem;padding:4px 14px;border-radius:20px;font-weight:500;white-space:nowrap;}
+.price-name{font-size:.78rem;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-bottom:.75rem;}
+.price-amt{font-family:'Cinzel',serif;font-size:2.5rem;font-weight:700;margin-bottom:.2rem;}
+.price-amt span{font-size:1rem;font-weight:400;color:var(--muted);font-family:'Inter',sans-serif;}
+.price-desc{font-size:.84rem;color:var(--muted);margin-bottom:1.5rem;}
+.price-feats{list-style:none;margin-bottom:2rem;}
+.price-feats li{font-size:.875rem;padding:.4rem 0;color:var(--muted);display:flex;align-items:center;gap:8px;}
+.price-feats li::before{content:'✓';color:var(--red3);font-weight:600;flex-shrink:0;}
+.price-btn{display:block;text-align:center;padding:.75rem;border-radius:8px;font-size:.9rem;font-weight:500;cursor:pointer;border:none;width:100%;transition:all .2s;}
+.pbtn-ghost{background:transparent;color:var(--text);border:1px solid var(--border2);}
+.pbtn-ghost:hover{background:var(--bg3);}
+.pbtn-solid{background:var(--red);color:#fff;}
+.pbtn-solid:hover{background:var(--red2);}
+
+/* CTA Section */
+.cta-sec{text-align:center;padding:6rem 2rem;background:radial-gradient(ellipse at center,rgba(185,28,28,.08) 0%,transparent 70%);border-top:1px solid var(--border);}
+.cta-sec h2{font-family:'Cinzel',serif;font-size:clamp(2rem,5vw,3.2rem);font-weight:700;margin-bottom:1rem;}
+.cta-sec p{color:var(--muted);margin-bottom:2.5rem;font-size:1.05rem;}
+
+/* Footer */
+.site-footer{border-top:1px solid var(--border);padding:2.5rem 2rem;max-width:1100px;margin:0 auto;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:1rem;}
+.footer-logo{font-family:'Cinzel',serif;font-size:1rem;font-weight:700;}
+.footer-logo span{color:var(--red2);}
+.footer-links{display:flex;gap:1.5rem;flex-wrap:wrap;}
+.footer-links a{font-size:.84rem;color:var(--dim);text-decoration:none;cursor:pointer;}
+.footer-links a:hover{color:var(--muted);}
+.footer-copy{font-size:.78rem;color:var(--dim);}
+
+/* ===== AUTH PAGES ===== */
+.auth-page{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:5rem 1.5rem 2rem;background:var(--bg);}
+.auth-box{background:var(--bg2);border:1px solid var(--border2);border-radius:16px;padding:2.5rem;width:100%;max-width:420px;}
+.auth-logo{font-family:'Cinzel',serif;font-size:1.3rem;font-weight:900;text-align:center;margin-bottom:.5rem;}
+.auth-logo span{color:var(--red2);}
+.auth-tagline{text-align:center;font-size:.85rem;color:var(--muted);margin-bottom:2rem;}
+.auth-tabs{display:flex;background:var(--bg3);border-radius:9px;padding:4px;margin-bottom:2rem;}
+.auth-tab{flex:1;text-align:center;padding:.55rem;border-radius:7px;font-size:.875rem;cursor:pointer;color:var(--muted);transition:all .2s;}
+.auth-tab.active{background:var(--bg);color:var(--text);font-weight:500;}
+.form-group{margin-bottom:1.25rem;}
+.form-label{display:block;font-size:.82rem;color:var(--muted);margin-bottom:.4rem;}
+.form-input{width:100%;background:var(--bg3);border:1px solid var(--border2);border-radius:8px;padding:.7rem 1rem;color:var(--text);font-size:.9rem;outline:none;transition:border-color .2s;font-family:'Inter',sans-serif;}
+.form-input:focus{border-color:rgba(185,28,28,.5);}
+.form-input::placeholder{color:var(--dim);}
+.form-select{width:100%;background:var(--bg3);border:1px solid var(--border2);border-radius:8px;padding:.7rem 1rem;color:var(--text);font-size:.9rem;outline:none;font-family:'Inter',sans-serif;cursor:pointer;}
+.form-select option{background:var(--bg3);}
+.auth-submit{width:100%;background:var(--red);color:#fff;border:none;border-radius:8px;padding:.85rem;font-size:1rem;font-weight:500;cursor:pointer;transition:background .2s;margin-top:.5rem;}
+.auth-submit:hover{background:var(--red2);}
+.auth-divider{display:flex;align-items:center;gap:1rem;margin:1.5rem 0;color:var(--dim);font-size:.82rem;}
+.auth-divider::before,.auth-divider::after{content:'';flex:1;height:1px;background:var(--border);}
+.social-btns{display:flex;flex-direction:column;gap:.75rem;}
+.social-btn{display:flex;align-items:center;justify-content:center;gap:.65rem;background:var(--bg3);border:1px solid var(--border2);border-radius:8px;padding:.7rem;font-size:.875rem;cursor:pointer;color:var(--text);transition:background .2s;}
+.social-btn:hover{background:var(--bg4);}
+.social-icon{width:18px;height:18px;}
+.auth-switch{text-align:center;margin-top:1.25rem;font-size:.84rem;color:var(--muted);}
+.auth-switch a{color:var(--red3);cursor:pointer;text-decoration:none;}
+.auth-switch a:hover{text-decoration:underline;}
+
+/* ===== DASHBOARD ===== */
+.dash-layout{display:flex;min-height:100vh;padding-top:62px;}
+.sidebar{width:230px;background:var(--bg2);border-right:1px solid var(--border);position:fixed;top:62px;left:0;bottom:0;overflow-y:auto;padding:1.5rem 1rem;display:flex;flex-direction:column;z-index:100;}
+.sidebar-logo{font-family:'Cinzel',serif;font-size:1rem;font-weight:900;padding:.25rem .5rem;margin-bottom:2rem;}
+.sidebar-logo span{color:var(--red2);}
+.sidebar-section{font-size:.7rem;letter-spacing:.12em;text-transform:uppercase;color:var(--dim);padding:.25rem .5rem;margin-bottom:.4rem;margin-top:1.25rem;}
+.sidebar-section:first-of-type{margin-top:0;}
+.nav-item{display:flex;align-items:center;gap:10px;padding:.6rem .75rem;border-radius:7px;font-size:.875rem;color:var(--muted);cursor:pointer;transition:all .15s;margin-bottom:1px;}
+.nav-item:hover{background:rgba(255,255,255,.04);color:var(--text);}
+.nav-item.active{background:rgba(185,28,28,.12);color:var(--red3);}
+.nav-item .ni{font-size:1rem;width:20px;text-align:center;}
+.sidebar-bottom{margin-top:auto;padding-top:1rem;border-top:1px solid var(--border);}
+.user-pill{display:flex;align-items:center;gap:10px;padding:.6rem .75rem;border-radius:7px;cursor:pointer;}
+.user-av{width:30px;height:30px;border-radius:50%;background:rgba(185,28,28,.2);display:flex;align-items:center;justify-content:center;font-size:.73rem;font-weight:600;color:var(--red3);flex-shrink:0;}
+.user-name{font-size:.84rem;font-weight:500;}
+.user-plan{font-size:.72rem;color:var(--dim);}
+
+.dash-content{margin-left:230px;flex:1;padding:2rem;min-height:calc(100vh - 62px);}
+.dash-sub-page{display:none;}
+.dash-sub-page.active{display:block;}
+
+/* Dash Header */
+.page-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:2rem;}
+.page-title{font-size:1.2rem;font-weight:600;}
+.page-title small{display:block;font-size:.8rem;color:var(--muted);font-weight:400;margin-top:2px;}
+
+/* Stat Cards */
+.stats-row{display:grid;grid-template-columns:repeat(4,1fr);gap:1rem;margin-bottom:2rem;}
+.stat-card{background:var(--bg2);border:1px solid var(--border);border-radius:10px;padding:1.1rem;}
+.stat-lbl{font-size:.73rem;color:var(--dim);margin-bottom:.35rem;text-transform:uppercase;letter-spacing:.05em;}
+.stat-val{font-size:1.55rem;font-weight:600;font-family:'Cinzel',serif;margin-bottom:.2rem;}
+.stat-change{font-size:.73rem;}
+.up{color:var(--green2);}
+.neutral{color:var(--dim);}
+
+/* Series Cards */
+.series-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:1rem;margin-top:1rem;}
+.series-card{background:var(--bg2);border:1px solid var(--border);border-radius:10px;overflow:hidden;cursor:pointer;transition:border-color .2s;}
+.series-card:hover{border-color:rgba(185,28,28,.4);}
+.series-thumb{height:95px;background:var(--bg3);display:flex;align-items:center;justify-content:center;font-size:2.2rem;position:relative;}
+.status-pill{position:absolute;top:8px;right:8px;font-size:.64rem;padding:2px 8px;border-radius:10px;font-weight:500;}
+.s-live{background:rgba(74,222,128,.12);border:1px solid rgba(74,222,128,.3);color:var(--green2);}
+.s-paused{background:rgba(251,191,36,.1);border:1px solid rgba(251,191,36,.3);color:#fbbf24;}
+.s-draft{background:rgba(148,163,184,.1);border:1px solid rgba(148,163,184,.25);color:#94a3b8;}
+.series-info{padding:.85rem;}
+.series-name{font-size:.875rem;font-weight:500;margin-bottom:3px;}
+.series-meta{font-size:.73rem;color:var(--dim);}
+.add-series{background:var(--bg2);border:1px dashed var(--border2);border-radius:10px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:.5rem;height:160px;cursor:pointer;color:var(--muted);font-size:.85rem;transition:all .2s;}
+.add-series:hover{border-color:rgba(185,28,28,.4);color:var(--red3);}
+.plus-ico{font-size:1.8rem;color:var(--dim);}
+
+/* Activity */
+.activity-feed{background:var(--bg2);border:1px solid var(--border);border-radius:12px;overflow:hidden;}
+.activity-head{padding:1rem 1.25rem;border-bottom:1px solid var(--border);display:flex;justify-content:space-between;align-items:center;}
+.activity-head h3{font-size:.9rem;font-weight:600;}
+.activity-item{display:flex;align-items:center;gap:12px;padding:.85rem 1.25rem;border-bottom:1px solid var(--border);transition:background .15s;}
+.activity-item:last-child{border-bottom:none;}
+.activity-item:hover{background:var(--bg3);}
+.act-ico{width:34px;height:34px;border-radius:8px;background:rgba(185,28,28,.1);display:flex;align-items:center;justify-content:center;font-size:.95rem;flex-shrink:0;}
+.act-text{flex:1;font-size:.83rem;}
+.act-text strong{color:var(--text);font-weight:500;display:block;}
+.act-text span{color:var(--muted);}
+.act-time{font-size:.72rem;color:var(--dim);}
+
+/* Channels panel */
+.channel-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:1rem;margin-top:1rem;}
+.channel-card{background:var(--bg2);border:1px solid var(--border);border-radius:12px;padding:1.25rem;}
+.channel-top{display:flex;align-items:center;gap:12px;margin-bottom:1rem;}
+.ch-icon{width:40px;height:40px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:1.4rem;}
+.ch-yt{background:rgba(255,0,0,.1);}
+.ch-tt{background:rgba(0,0,0,.3);border:1px solid var(--border);}
+.ch-fb{background:rgba(24,119,242,.1);}
+.ch-name{font-size:.9rem;font-weight:500;}
+.ch-handle{font-size:.75rem;color:var(--muted);}
+.ch-stats{display:flex;gap:1rem;}
+.ch-stat{text-align:center;}
+.ch-stat-val{font-size:1rem;font-weight:600;}
+.ch-stat-lbl{font-size:.7rem;color:var(--dim);}
+.connect-btn{display:block;width:100%;margin-top:1rem;padding:.55rem;border-radius:7px;font-size:.82rem;text-align:center;cursor:pointer;border:1px solid var(--border2);background:transparent;color:var(--text);transition:all .2s;}
+.connect-btn:hover{background:var(--bg3);}
+.connect-btn.connected{background:rgba(74,222,128,.08);border-color:rgba(74,222,128,.25);color:var(--green2);}
+.add-channel{background:var(--bg2);border:1px dashed var(--border2);border-radius:12px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:.5rem;padding:2rem;cursor:pointer;color:var(--muted);font-size:.84rem;transition:all .2s;}
+.add-channel:hover{border-color:rgba(185,28,28,.4);color:var(--red3);}
+
+/* Create Wizard */
+.wizard-wrap{max-width:720px;}
+.wizard-steps{display:flex;gap:0;margin-bottom:2.5rem;background:var(--bg2);border:1px solid var(--border);border-radius:10px;overflow:hidden;}
+.wstep{flex:1;padding:.75rem .5rem;text-align:center;font-size:.8rem;color:var(--dim);cursor:pointer;transition:all .2s;border-right:1px solid var(--border);position:relative;}
+.wstep:last-child{border-right:none;}
+.wstep.active{background:rgba(185,28,28,.1);color:var(--red3);}
+.wstep.done{color:var(--green2);}
+.wstep .wnum{display:block;font-size:.65rem;margin-bottom:2px;font-weight:600;letter-spacing:.05em;}
+.wizard-body{background:var(--bg2);border:1px solid var(--border);border-radius:12px;padding:2rem;}
+.wizard-section{display:none;}
+.wizard-section.active{display:block;}
+.wizard-title{font-size:1.1rem;font-weight:600;margin-bottom:.4rem;}
+.wizard-sub{font-size:.84rem;color:var(--muted);margin-bottom:1.75rem;}
+.cat-select-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(130px,1fr));gap:.75rem;margin-bottom:1.75rem;}
+.cat-sel-item{background:var(--bg3);border:1px solid var(--border);border-radius:9px;padding:.9rem .75rem;text-align:center;cursor:pointer;transition:all .2s;font-size:.83rem;}
+.cat-sel-item:hover{border-color:rgba(185,28,28,.35);}
+.cat-sel-item.selected{border-color:var(--red2);background:rgba(185,28,28,.1);color:var(--text);}
+.cat-sel-item .ce{font-size:1.5rem;margin-bottom:.35rem;}
+.voice-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:.75rem;margin-bottom:1.75rem;}
+.voice-card{background:var(--bg3);border:1px solid var(--border);border-radius:9px;padding:1rem;cursor:pointer;transition:all .2s;}
+.voice-card:hover{border-color:rgba(185,28,28,.35);}
+.voice-card.selected{border-color:var(--red2);background:rgba(185,28,28,.1);}
+.voice-name{font-size:.875rem;font-weight:500;margin-bottom:2px;}
+.voice-desc{font-size:.75rem;color:var(--muted);}
+.voice-play{font-size:.75rem;color:var(--red3);margin-top:.4rem;cursor:pointer;}
+.sched-options{display:grid;grid-template-columns:repeat(3,1fr);gap:.75rem;margin-bottom:1.75rem;}
+.sched-opt{background:var(--bg3);border:1px solid var(--border);border-radius:9px;padding:1rem;text-align:center;cursor:pointer;transition:all .2s;}
+.sched-opt:hover{border-color:rgba(185,28,24,.35);}
+.sched-opt.selected{border-color:var(--red2);background:rgba(185,28,28,.1);}
+.sched-opt .freq{font-size:1.3rem;font-weight:700;font-family:'Cinzel',serif;color:var(--text);margin-bottom:2px;}
+.sched-opt .freq-lbl{font-size:.75rem;color:var(--muted);}
+.platform-row{display:flex;gap:.75rem;flex-wrap:wrap;margin-bottom:1.75rem;}
+.plat-toggle{display:flex;align-items:center;gap:8px;background:var(--bg3);border:1px solid var(--border);border-radius:8px;padding:.6rem 1rem;cursor:pointer;font-size:.84rem;transition:all .2s;}
+.plat-toggle.on{border-color:rgba(74,222,128,.35);background:rgba(74,222,128,.07);color:var(--green2);}
+.toggle-dot{width:8px;height:8px;border-radius:50%;background:var(--dim);}
+.plat-toggle.on .toggle-dot{background:var(--green2);}
+.wizard-nav{display:flex;justify-content:space-between;margin-top:1.5rem;}
+
+/* AI Script Generator */
+.script-wrap{max-width:800px;}
+.prompt-area{width:100%;background:var(--bg3);border:1px solid var(--border2);border-radius:10px;padding:1rem;color:var(--text);font-size:.9rem;outline:none;resize:vertical;font-family:'Inter',sans-serif;min-height:100px;transition:border-color .2s;}
+.prompt-area:focus{border-color:rgba(185,28,28,.5);}
+.ai-output{background:var(--bg3);border:1px solid var(--border);border-radius:10px;padding:1.5rem;margin-top:1.5rem;min-height:200px;font-size:.9rem;line-height:1.8;color:var(--text);white-space:pre-wrap;}
+.ai-loading{display:flex;align-items:center;gap:.75rem;color:var(--muted);font-size:.875rem;}
+.ai-dot{width:8px;height:8px;border-radius:50%;background:var(--red);animation:aidot 1.2s ease-in-out infinite;}
+.ai-dot:nth-child(2){animation-delay:.2s;}
+.ai-dot:nth-child(3){animation-delay:.4s;}
+@keyframes aidot{0%,80%,100%{opacity:.2;transform:scale(.8);}40%{opacity:1;transform:scale(1);}}
+.script-toolbar{display:flex;gap:.75rem;margin-top:1rem;flex-wrap:wrap;}
+.toolbar-btn{background:var(--bg3);border:1px solid var(--border2);border-radius:7px;padding:.45rem 1rem;font-size:.82rem;color:var(--text);cursor:pointer;transition:all .2s;}
+.toolbar-btn:hover{background:var(--bg4);border-color:var(--border2);}
+.toolbar-btn.primary{background:var(--red);border-color:transparent;color:#fff;}
+.toolbar-btn.primary:hover{background:var(--red2);}
+
+/* Analytics */
+.analytics-grid{display:grid;grid-template-columns:2fr 1fr;gap:1.5rem;margin-top:1.5rem;}
+.ana-card{background:var(--bg2);border:1px solid var(--border);border-radius:12px;padding:1.5rem;}
+.ana-card h3{font-size:.9rem;font-weight:600;margin-bottom:1.25rem;color:var(--muted);text-transform:uppercase;letter-spacing:.05em;font-size:.75rem;}
+.chart-bars{display:flex;align-items:flex-end;gap:6px;height:130px;padding-bottom:1.5rem;position:relative;border-bottom:1px solid var(--border);}
+.bar-wrap{flex:1;display:flex;flex-direction:column;align-items:center;gap:4px;height:100%;}
+.bar{width:100%;background:rgba(185,28,28,.3);border-radius:3px 3px 0 0;transition:background .2s;cursor:pointer;position:relative;}
+.bar:hover{background:rgba(185,28,28,.6);}
+.bar-lbl{font-size:.62rem;color:var(--dim);white-space:nowrap;}
+.top-videos{list-style:none;}
+.top-vid-item{display:flex;align-items:center;gap:10px;padding:.65rem 0;border-bottom:1px solid var(--border);}
+.top-vid-item:last-child{border-bottom:none;}
+.vid-rank{font-family:'Cinzel',serif;font-size:.8rem;font-weight:700;color:var(--dim);width:18px;flex-shrink:0;}
+.vid-title{flex:1;font-size:.82rem;color:var(--text);}
+.vid-views{font-size:.8rem;color:var(--muted);}
+.plat-breakdown{display:flex;flex-direction:column;gap:.75rem;}
+.plat-row{display:flex;align-items:center;gap.10px;}
+.plat-name{font-size:.82rem;width:80px;color:var(--muted);}
+.plat-bar-bg{flex:1;height:6px;background:var(--bg3);border-radius:3px;overflow:hidden;}
+.plat-bar-fill{height:100%;border-radius:3px;}
+.plat-pct{font-size:.78rem;color:var(--muted);width:36px;text-align:right;}
+
+/* Notification Toast */
+.toast{position:fixed;bottom:2rem;right:2rem;background:var(--bg3);border:1px solid var(--border2);border-radius:10px;padding:1rem 1.25rem;font-size:.875rem;color:var(--text);z-index:999;transform:translateY(20px);opacity:0;transition:all .3s;max-width:320px;}
+.toast.show{transform:translateY(0);opacity:1;}
+.toast.success{border-color:rgba(74,222,128,.3);}
+.toast.error{border-color:rgba(185,28,28,.4);}
+
+/* Settings */
+.settings-grid{display:grid;grid-template-columns:200px 1fr;gap:2rem;margin-top:1rem;}
+.settings-nav{display:flex;flex-direction:column;gap:2px;}
+.snav-item{padding:.6rem .9rem;border-radius:7px;font-size:.875rem;color:var(--muted);cursor:pointer;transition:all .15s;}
+.snav-item:hover{background:var(--bg3);color:var(--text);}
+.snav-item.active{background:rgba(185,28,28,.1);color:var(--red3);}
+.settings-panel{display:none;}
+.settings-panel.active{display:block;}
+.settings-section{background:var(--bg2);border:1px solid var(--border);border-radius:12px;padding:1.5rem;margin-bottom:1.25rem;}
+.settings-section h3{font-size:.95rem;font-weight:600;margin-bottom:1.25rem;padding-bottom:.75rem;border-bottom:1px solid var(--border);}
+.setting-row{display:flex;justify-content:space-between;align-items:center;padding:.75rem 0;border-bottom:1px solid var(--border);}
+.setting-row:last-child{border-bottom:none;}
+.setting-info h4{font-size:.875rem;font-weight:500;margin-bottom:2px;}
+.setting-info p{font-size:.78rem;color:var(--muted);}
+.toggle-switch{width:44px;height:24px;background:var(--bg4);border-radius:12px;position:relative;cursor:pointer;transition:background .2s;flex-shrink:0;}
+.toggle-switch.on{background:var(--red);}
+.toggle-switch::after{content:'';position:absolute;width:18px;height:18px;background:#fff;border-radius:50%;top:3px;left:3px;transition:transform .2s;}
+.toggle-switch.on::after{transform:translateX(20px);}
+.save-btn{background:var(--red);color:#fff;border:none;border-radius:8px;padding:.6rem 1.5rem;font-size:.875rem;font-weight:500;cursor:pointer;transition:background .2s;}
+.save-btn:hover{background:var(--red2);}
+
+/* Schedule Page */
+.schedule-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:.5rem;margin-top:1.5rem;}
+.sched-day-header{text-align:center;font-size:.72rem;color:var(--dim);padding:.5rem;letter-spacing:.06em;text-transform:uppercase;}
+.sched-slot{background:var(--bg2);border:1px solid var(--border);border-radius:8px;padding:.6rem;min-height:80px;font-size:.72rem;cursor:pointer;transition:all .2s;}
+.sched-slot:hover{border-color:var(--border2);}
+.sched-slot .slot-time{color:var(--dim);margin-bottom:.4rem;}
+.sched-item{background:rgba(185,28,28,.12);border:1px solid rgba(185,28,28,.25);border-radius:5px;padding:3px 6px;color:var(--red3);font-size:.7rem;margin-bottom:3px;cursor:pointer;}
+.sched-item.yt{background:rgba(255,0,0,.1);border-color:rgba(255,0,0,.25);color:#ff6b6b;}
+.sched-item.fb{background:rgba(24,119,242,.1);border-color:rgba(24,119,242,.25);color:#60a5fa;}
+
+/* Misc */
+.two-col{display:grid;grid-template-columns:1fr 1fr;gap:1.5rem;margin-bottom:1.5rem;}
+.section-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:1rem;}
+.section-head h3{font-size:.9rem;font-weight:600;}
+.tag{display:inline-block;padding:3px 10px;border-radius:10px;font-size:.7rem;font-weight:500;}
+.tag-red{background:rgba(185,28,28,.12);color:var(--red3);border:1px solid rgba(185,28,28,.2);}
+.tag-green{background:rgba(74,222,128,.1);color:var(--green2);border:1px solid rgba(74,222,128,.2);}
+.tag-gold{background:rgba(240,192,64,.08);color:var(--gold2);border:1px solid rgba(240,192,64,.2);}
+</style>
+</head>
+<body>
+
+<!-- TOAST -->
+<div class="toast" id="toast"></div>
+
+<!-- ===== NAV ===== -->
+<nav>
+  <div class="nav-logo" onclick="showPage('landing')">Moverse<span>AI</span></div>
+  <div class="nav-links" id="landing-nav">
+    <a onclick="scrollTo('#features')">Features</a>
+    <a onclick="scrollTo('#categories')">Categories</a>
+    <a onclick="scrollTo('#pricing')">Pricing</a>
+    <a onclick="showPage('landing')">Blog</a>
+  </div>
+  <div class="nav-auth" id="nav-auth-btns">
+    <button class="btn-nav-ghost" onclick="showPage('auth')">Sign In</button>
+    <button class="btn-nav-red" onclick="showPage('auth')">Get Started Free</button>
+  </div>
+  <div class="nav-auth" id="nav-dash-btns" style="display:none">
+    <button class="btn-nav-ghost" onclick="showToast('🔔 No new notifications','success')">🔔</button>
+    <button class="btn-nav-red" onclick="showDash('create')">+ Create Video</button>
+  </div>
+</nav>
+
+<!-- ================================================================ -->
+<!-- LANDING PAGE -->
+<!-- ================================================================ -->
+<div class="page active" id="page-landing">
+
+  <!-- Hero -->
+  <div class="hero">
+    <div class="hero-badge">AI-Powered Dark History Content</div>
+    <h1>Go <span class="r">Viral</span> with Dark History<br>Videos on <span class="g">Autopilot</span></h1>
+    <p class="hero-sub">MoverseAI writes, produces, and auto-posts dark & weird history shorts to YouTube, TikTok, and Facebook — completely faceless.</p>
+    <div class="hero-btns">
+      <button class="btn-primary" onclick="showPage('auth')">Start Free — No Card Needed</button>
+      <button class="btn-ghost" onclick="showPage('auth')">See the Dashboard →</button>
+    </div>
+    <div class="hero-stats">
+      <div class="hstat"><div class="n">25K+</div><div class="l">Creators</div></div>
+      <div class="hstat"><div class="n">2M+</div><div class="l">Videos Made</div></div>
+      <div class="hstat"><div class="n">18</div><div class="l">Dark Niches</div></div>
+      <div class="hstat"><div class="n">100%</div><div class="l">Faceless</div></div>
+    </div>
+  </div>
+
+  <!-- Ticker -->
+  <div class="ticker">
+    <div class="ticker-inner">
+      <div class="tick-tag"><div class="tick-dot"></div>Dark History</div>
+      <div class="tick-tag"><div class="tick-dot"></div>Weird Deaths</div>
+      <div class="tick-tag"><div class="tick-dot"></div>Ancient Curses</div>
+      <div class="tick-tag"><div class="tick-dot"></div>Serial Killers</div>
+      <div class="tick-tag"><div class="tick-dot"></div>Lost Civilizations</div>
+      <div class="tick-tag"><div class="tick-dot"></div>Forbidden Science</div>
+      <div class="tick-tag"><div class="tick-dot"></div>Creepy Unsolved</div>
+      <div class="tick-tag"><div class="tick-dot"></div>Dark Royals</div>
+      <div class="tick-tag"><div class="tick-dot"></div>Medieval Secrets</div>
+      <div class="tick-tag"><div class="tick-dot"></div>Secret Societies</div>
+      <div class="tick-tag"><div class="tick-dot"></div>Haunted Places</div>
+      <div class="tick-tag"><div class="tick-dot"></div>Cryptic Prophecies</div>
+      <div class="tick-tag"><div class="tick-dot"></div>Dark History</div>
+      <div class="tick-tag"><div class="tick-dot"></div>Weird Deaths</div>
+      <div class="tick-tag"><div class="tick-dot"></div>Ancient Curses</div>
+      <div class="tick-tag"><div class="tick-dot"></div>Serial Killers</div>
+      <div class="tick-tag"><div class="tick-dot"></div>Lost Civilizations</div>
+      <div class="tick-tag"><div class="tick-dot"></div>Forbidden Science</div>
+      <div class="tick-tag"><div class="tick-dot"></div>Creepy Unsolved</div>
+      <div class="tick-tag"><div class="tick-dot"></div>Dark Royals</div>
+      <div class="tick-tag"><div class="tick-dot"></div>Medieval Secrets</div>
+      <div class="tick-tag"><div class="tick-dot"></div>Secret Societies</div>
+      <div class="tick-tag"><div class="tick-dot"></div>Haunted Places</div>
+      <div class="tick-tag"><div class="tick-dot"></div>Cryptic Prophecies</div>
+    </div>
+  </div>
+
+  <!-- Features -->
+  <section class="lsec" id="features">
+    <div class="sec-label">Everything You Need</div>
+    <h2 class="sec-title">Built for Dark History Creators</h2>
+    <p class="sec-sub">Every tool to build a viral faceless channel — powered by AI, built for your niche.</p>
+    <div class="feat-grid">
+      <div class="feat-card"><div class="feat-ico">🧠</div><h3>AI Script Generation</h3><p>Automatically writes dark history scripts with hooks, cliffhangers, and viral narration powered by Claude AI.</p></div>
+      <div class="feat-card"><div class="feat-ico">🎬</div><h3>Auto Video Creation</h3><p>AI selects historical footage, adds captions, eerie background music, and transitions. Zero editing needed.</p></div>
+      <div class="feat-card"><div class="feat-ico">📅</div><h3>Auto-Post Scheduling</h3><p>Set your schedule once. MoverseAI posts to YouTube Shorts, TikTok, and Facebook Reels at your optimal times.</p></div>
+      <div class="feat-card"><div class="feat-ico">🎙️</div><h3>AI Voiceover</h3><p>Dark, dramatic narrator voices in 40+ languages. No mic. No recording. Just pure storytelling.</p></div>
+      <div class="feat-card"><div class="feat-ico">📊</div><h3>Analytics Dashboard</h3><p>Track views, watch time, and follower growth across all platforms in one command center.</p></div>
+      <div class="feat-card"><div class="feat-ico">🔁</div><h3>Infinite Series</h3><p>Create unlimited video series — one topic, endless unique episodes. Never run out of dark history content.</p></div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- How It Works -->
+  <section class="lsec">
+    <div class="sec-label">Simple Process</div>
+    <h2 class="sec-title">Viral in 4 Steps</h2>
+    <div class="steps">
+      <div><div class="step-num">01</div><h3>Pick Your Dark Niche</h3><p>Choose from 18 dark history categories — ancient curses, serial killers, weird deaths, forbidden science, and more.</p></div>
+      <div><div class="step-num">02</div><h3>AI Builds the Video</h3><p>Scripts, visuals, narration, captions, and suspenseful music — generated automatically in seconds.</p></div>
+      <div><div class="step-num">03</div><h3>Review or Auto-Post</h3><p>Approve with one click or let it auto-post on your schedule to YouTube, TikTok, and Facebook.</p></div>
+      <div><div class="step-num">04</div><h3>Watch Views Roll In</h3><p>Your channel grows 24/7 without you lifting a finger. Track it all from your dashboard.</p></div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- Categories -->
+  <section class="lsec" id="categories">
+    <div class="sec-label">18 Dark Niches</div>
+    <h2 class="sec-title">Choose Your Dark Obsession</h2>
+    <p class="sec-sub">Every category tuned for viral short-form content with proven hooks and watch-time retention.</p>
+    <div class="cats-grid">
+      <div class="cat-card"><div class="cat-emoji">⚔️</div><h4>Dark History</h4><div class="cat-meta">Most Popular</div></div>
+      <div class="cat-card"><div class="cat-emoji">💀</div><h4>Weird Deaths</h4><div class="cat-meta">High Engagement</div></div>
+      <div class="cat-card"><div class="cat-emoji">🏛️</div><h4>Lost Civilizations</h4><div class="cat-meta">Trending Now</div></div>
+      <div class="cat-card"><div class="cat-emoji">🔪</div><h4>Serial Killers</h4><div class="cat-meta">High Views</div></div>
+      <div class="cat-card"><div class="cat-emoji">🌑</div><h4>Ancient Curses</h4><div class="cat-meta">Viral Rate 94%</div></div>
+      <div class="cat-card"><div class="cat-emoji">🧪</div><h4>Forbidden Science</h4><div class="cat-meta">Fast Growing</div></div>
+      <div class="cat-card"><div class="cat-emoji">👑</div><h4>Dark Royals</h4><div class="cat-meta">New</div></div>
+      <div class="cat-card"><div class="cat-emoji">🕵️</div><h4>Creepy Unsolved</h4><div class="cat-meta">Top Retention</div></div>
+      <div class="cat-card"><div class="cat-emoji">🏚️</div><h4>Haunted Places</h4><div class="cat-meta">High Shares</div></div>
+      <div class="cat-card"><div class="cat-emoji">🔮</div><h4>Secret Societies</h4><div class="cat-meta">Trending</div></div>
+      <div class="cat-card"><div class="cat-emoji">⚗️</div><h4>Medieval Secrets</h4><div class="cat-meta">Viral Hooks</div></div>
+      <div class="cat-card"><div class="cat-emoji">📜</div><h4>Cryptic Prophecies</h4><div class="cat-meta">Strong CTR</div></div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- Testimonials -->
+  <section class="lsec">
+    <div class="sec-label">Social Proof</div>
+    <h2 class="sec-title">What Creators Are Saying</h2>
+    <div class="testi-grid">
+      <div class="testi"><p>"I went from 0 to 48K followers in 3 months just posting dark history shorts. MoverseAI does literally everything."</p><div class="testi-author"><div class="tav">JR</div><div><div class="testi-name">@dark.history.daily</div><div class="testi-handle">YouTube · 48K subs</div></div></div></div>
+      <div class="testi"><p>"The AI scripts are insane. It writes better dark history hooks than I ever could. My watch time doubled in 6 weeks."</p><div class="testi-author"><div class="tav">MK</div><div><div class="testi-name">@weirdhistoryfacts</div><div class="testi-handle">TikTok · 112K followers</div></div></div></div>
+      <div class="testi"><p>"Never showed my face. Never recorded my voice. MoverseAI posts 2 videos a day and I make $2K/month from ads now."</p><div class="testi-author"><div class="tav">TS</div><div><div class="testi-name">@cursed_history</div><div class="testi-handle">Facebook · 89K followers</div></div></div></div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- Pricing -->
+  <section class="lsec" id="pricing">
+    <div class="sec-label">Simple Pricing</div>
+    <h2 class="sec-title">Start Free, Scale When Ready</h2>
+    <div class="price-grid">
+      <div class="price-card">
+        <div class="price-name">Starter</div>
+        <div class="price-amt">$0 <span>/month</span></div>
+        <div class="price-desc">Perfect for testing the waters</div>
+        <ul class="price-feats">
+          <li>10 videos/month</li><li>3 dark categories</li><li>YouTube Shorts only</li><li>Basic AI voiceover</li><li>Manual posting</li>
+        </ul>
+        <button class="price-btn pbtn-ghost" onclick="showPage('auth')">Get Started Free</button>
+      </div>
+      <div class="price-card featured">
+        <div class="price-badge">Most Popular</div>
+        <div class="price-name">Creator</div>
+        <div class="price-amt">$29 <span>/month</span></div>
+        <div class="price-desc">For serious dark history creators</div>
+        <ul class="price-feats">
+          <li>Unlimited videos/month</li><li>All 18 dark categories</li><li>YouTube + TikTok + Facebook</li><li>Premium AI narrator voices</li><li>Auto-scheduling & posting</li><li>Analytics dashboard</li><li>6 active series</li>
+        </ul>
+        <button class="price-btn pbtn-solid" onclick="showPage('auth')">Start 7-Day Free Trial</button>
+      </div>
+      <div class="price-card">
+        <div class="price-name">Pro</div>
+        <div class="price-amt">$79 <span>/month</span></div>
+        <div class="price-desc">For multi-channel empires</div>
+        <ul class="price-feats">
+          <li>Everything in Creator</li><li>Unlimited active series</li><li>5 channel connections</li><li>Custom voice cloning</li><li>Priority AI processing</li><li>White-label exports</li><li>Dedicated support</li>
+        </ul>
+        <button class="price-btn pbtn-ghost" onclick="showPage('auth')">Get Pro</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <div class="cta-sec">
+    <h2>Your Dark History Channel<br>Starts Tonight</h2>
+    <p>No camera. No mic. No editing. Viral content on autopilot.</p>
+    <button class="btn-primary" style="font-size:1.05rem;padding:1rem 2.5rem" onclick="showPage('auth')">Create Your First Video Free →</button>
+  </div>
+
+  <footer class="site-footer">
+    <div class="footer-logo">Moverse<span>AI</span></div>
+    <div class="footer-links">
+      <a>Features</a><a>Pricing</a><a>Blog</a><a>Affiliate</a><a>Privacy</a><a>Terms</a>
+    </div>
+    <div class="footer-copy">© 2026 MoverseAI. All rights reserved.</div>
+  </footer>
+</div>
+
+<!-- ================================================================ -->
+<!-- AUTH PAGE -->
+<!-- ================================================================ -->
+<div class="page" id="page-auth">
+  <div class="auth-page">
+    <div class="auth-box">
+      <div class="auth-logo">Moverse<span>AI</span></div>
+      <div class="auth-tagline">Dark History Videos on Autopilot</div>
+      <div class="auth-tabs">
+        <div class="auth-tab active" id="tab-signin" onclick="switchAuthTab('signin')">Sign In</div>
+        <div class="auth-tab" id="tab-signup" onclick="switchAuthTab('signup')">Create Account</div>
+      </div>
+
+      <!-- Sign In Form -->
+      <div id="form-signin">
+        <div class="form-group"><label class="form-label">Email Address</label><input type="email" class="form-input" placeholder="you@example.com" id="signin-email"></div>
+        <div class="form-group"><label class="form-label">Password</label><input type="password" class="form-input" placeholder="••••••••" id="signin-pass"></div>
+        <button class="auth-submit" onclick="doSignIn()">Sign In to MoverseAI</button>
+        <div class="auth-divider">or continue with</div>
+        <div class="social-btns">
+          <div class="social-btn" onclick="doSignIn()">
+            <svg class="social-icon" viewBox="0 0 24 24"><path fill="#4285f4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/><path fill="#34a853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/><path fill="#fbbc05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/><path fill="#ea4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/></svg>
+            Continue with Google
+          </div>
+          <div class="social-btn" onclick="doSignIn()">
+            <svg class="social-icon" viewBox="0 0 24 24" fill="#1877f2"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+            Continue with Facebook
+          </div>
+        </div>
+        <div class="auth-switch">Don't have an account? <a onclick="switchAuthTab('signup')">Sign up free</a></div>
+      </div>
+
+      <!-- Sign Up Form -->
+      <div id="form-signup" style="display:none">
+        <div class="two-col" style="gap:1rem;margin-bottom:0">
+          <div class="form-group"><label class="form-label">First Name</label><input type="text" class="form-input" placeholder="John"></div>
+          <div class="form-group"><label class="form-label">Last Name</label><input type="text" class="form-input" placeholder="Doe"></div>
+        </div>
+        <div class="form-group"><label class="form-label">Email Address</label><input type="email" class="form-input" placeholder="you@example.com"></div>
+        <div class="form-group"><label class="form-label">Password</label><input type="password" class="form-input" placeholder="Min. 8 characters"></div>
+        <div class="form-group"><label class="form-label">Your Main Niche</label>
+          <select class="form-select">
+            <option>Dark History</option><option>Weird Deaths</option><option>Serial Killers</option><option>Ancient Curses</option><option>Lost Civilizations</option><option>Forbidden Science</option><option>Other</option>
+          </select>
+        </div>
+        <button class="auth-submit" onclick="doSignIn()">Create Free Account</button>
+        <div class="auth-switch">Already have an account? <a onclick="switchAuthTab('signin')">Sign in</a></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ================================================================ -->
+<!-- DASHBOARD -->
+<!-- ================================================================ -->
+<div class="page" id="page-dashboard">
+  <div class="dash-layout">
+
+    <!-- Sidebar -->
+    <aside class="sidebar">
+      <div class="sidebar-logo">Moverse<span>AI</span></div>
+      <div class="sidebar-section">Main</div>
+      <div class="nav-item active" onclick="showDash('home')" id="nav-home"><span class="ni">🏠</span> Dashboard</div>
+      <div class="nav-item" onclick="showDash('series')" id="nav-series"><span class="ni">🎬</span> My Series</div>
+      <div class="nav-item" onclick="showDash('create')" id="nav-create"><span class="ni">✨</span> Create Video</div>
+      <div class="nav-item" onclick="showDash('script')" id="nav-script"><span class="ni">🧠</span> AI Script Writer</div>
+      <div class="sidebar-section">Manage</div>
+      <div class="nav-item" onclick="showDash('schedule')" id="nav-schedule"><span class="ni">📅</span> Schedule</div>
+      <div class="nav-item" onclick="showDash('channels')" id="nav-channels"><span class="ni">🔗</span> Channels</div>
+      <div class="nav-item" onclick="showDash('analytics')" id="nav-analytics"><span class="ni">📊</span> Analytics</div>
+      <div class="sidebar-section">Account</div>
+      <div class="nav-item" onclick="showDash('settings')" id="nav-settings"><span class="ni">⚙️</span> Settings</div>
+      <div class="sidebar-section">Upgrade</div>
+      <div class="nav-item" style="color:var(--gold2)" onclick="showToast('💎 Upgrade page coming soon!','success')"><span class="ni">💎</span> Go Pro</div>
+      <div class="sidebar-bottom">
+        <div class="user-pill">
+          <div class="user-av">DH</div>
+          <div><div class="user-name">Dark History</div><div class="user-plan">Creator Plan</div></div>
+        </div>
+        <div class="nav-item" onclick="showPage('landing')"><span class="ni">🚪</span> Sign Out</div>
+      </div>
+    </aside>
+
+    <main class="dash-content">
+
+      <!-- HOME -->
+      <div class="dash-sub-page active" id="dash-home">
+        <div class="page-header">
+          <div class="page-title">Dashboard <small>Welcome back, Creator 👋</small></div>
+          <button class="btn-primary btn-sm" onclick="showDash('create')">+ New Series</button>
+        </div>
+        <div class="stats-row">
+          <div class="stat-card"><div class="stat-lbl">Total Views</div><div class="stat-val">1.4M</div><div class="stat-change up">↑ 23% this week</div></div>
+          <div class="stat-card"><div class="stat-lbl">Videos Posted</div><div class="stat-val">284</div><div class="stat-change up">↑ 12 this week</div></div>
+          <div class="stat-card"><div class="stat-lbl">Followers Gained</div><div class="stat-val">8.2K</div><div class="stat-change up">↑ 41% this month</div></div>
+          <div class="stat-card"><div class="stat-lbl">Active Series</div><div class="stat-val">6</div><div class="stat-change neutral">Auto-posting</div></div>
+        </div>
+        <div class="two-col">
+          <div>
+            <div class="section-head"><h3>Active Series</h3><a style="font-size:.8rem;color:var(--red3);cursor:pointer" onclick="showDash('series')">View all →</a></div>
+            <div class="series-grid" style="grid-template-columns:1fr 1fr">
+              <div class="series-card" onclick="showDash('series')"><div class="series-thumb">⚔️<div class="status-pill s-live">● Live</div></div><div class="series-info"><div class="series-name">Dark History Facts</div><div class="series-meta">48 videos · Daily</div></div></div>
+              <div class="series-card" onclick="showDash('series')"><div class="series-thumb">💀<div class="status-pill s-live">● Live</div></div><div class="series-info"><div class="series-name">Weird Deaths</div><div class="series-meta">31 videos · 3x/week</div></div></div>
+            </div>
+          </div>
+          <div class="activity-feed">
+            <div class="activity-head"><h3>Recent Activity</h3><span class="tag tag-green">Live</span></div>
+            <div class="activity-item"><div class="act-ico">📤</div><div class="act-text"><strong>Posted to YouTube Shorts</strong><span>"The Darkest Secret of the Pharaohs" — 12K views</span></div><div class="act-time">2h ago</div></div>
+            <div class="activity-item"><div class="act-ico">🎬</div><div class="act-text"><strong>Video Generated</strong><span>"Medieval Torture Devices Nobody Talks About"</span></div><div class="act-time">5h ago</div></div>
+            <div class="activity-item"><div class="act-ico">📤</div><div class="act-text"><strong>Posted to TikTok & Facebook</strong><span>"Weird Deaths from the 1800s" — 34K views</span></div><div class="act-time">Yesterday</div></div>
+            <div class="activity-item"><div class="act-ico">🧠</div><div class="act-text"><strong>Script Generated</strong><span>"The Cursed Tomb of Ramesses II"</span></div><div class="act-time">Yesterday</div></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- SERIES -->
+      <div class="dash-sub-page" id="dash-series">
+        <div class="page-header">
+          <div class="page-title">My Series <small>6 active series auto-posting daily</small></div>
+          <button class="btn-primary btn-sm" onclick="showDash('create')">+ New Series</button>
+        </div>
+        <div class="series-grid">
+          <div class="series-card"><div class="series-thumb">⚔️<div class="status-pill s-live">● Live</div></div><div class="series-info"><div class="series-name">Dark History Facts</div><div class="series-meta">48 videos · Daily posts</div></div></div>
+          <div class="series-card"><div class="series-thumb">💀<div class="status-pill s-live">● Live</div></div><div class="series-info"><div class="series-name">Weird & Dark Deaths</div><div class="series-meta">31 videos · 3x/week</div></div></div>
+          <div class="series-card"><div class="series-thumb">🔮<div class="status-pill s-paused">⏸ Paused</div></div><div class="series-info"><div class="series-name">Ancient Curses</div><div class="series-meta">19 videos · Paused</div></div></div>
+          <div class="series-card"><div class="series-thumb">🏛️<div class="status-pill s-live">● Live</div></div><div class="series-info"><div class="series-name">Lost Civilizations</div><div class="series-meta">22 videos · 2x/week</div></div></div>
+          <div class="series-card"><div class="series-thumb">🔪<div class="status-pill s-live">● Live</div></div><div class="series-info"><div class="series-name">Serial Killers Exposed</div><div class="series-meta">15 videos · Daily</div></div></div>
+          <div class="series-card"><div class="series-thumb">🧪<div class="status-pill s-draft">Draft</div></div><div class="series-info"><div class="series-name">Forbidden Science</div><div class="series-meta">0 videos · Draft</div></div></div>
+          <div class="add-series" onclick="showDash('create')"><div class="plus-ico">+</div><div>Create New Series</div></div>
+        </div>
+      </div>
+
+      <!-- CREATE WIZARD -->
+      <div class="dash-sub-page" id="dash-create">
+        <div class="page-header">
+          <div class="page-title">Create Video Series <small>Set up once, post forever</small></div>
+        </div>
+        <div class="wizard-wrap">
+          <div class="wizard-steps">
+            <div class="wstep active" id="ws1" onclick="goWizard(1)"><span class="wnum">STEP 1</span>Category</div>
+            <div class="wstep" id="ws2" onclick="goWizard(2)"><span class="wnum">STEP 2</span>Voice</div>
+            <div class="wstep" id="ws3" onclick="goWizard(3)"><span class="wnum">STEP 3</span>Platforms</div>
+            <div class="wstep" id="ws4" onclick="goWizard(4)"><span class="wnum">STEP 4</span>Schedule</div>
+            <div class="wstep" id="ws5" onclick="goWizard(5)"><span class="wnum">STEP 5</span>Launch</div>
+          </div>
+          <div class="wizard-body">
+
+            <!-- Step 1: Category -->
+            <div class="wizard-section active" id="wsec1">
+              <div class="wizard-title">Choose Your Dark Niche</div>
+              <div class="wizard-sub">Pick the type of dark history content for this series. Each category has unique AI scripts and visuals.</div>
+              <div class="cat-select-grid">
+                <div class="cat-sel-item selected" onclick="selCat(this)"><div class="ce">⚔️</div>Dark History</div>
+                <div class="cat-sel-item" onclick="selCat(this)"><div class="ce">💀</div>Weird Deaths</div>
+                <div class="cat-sel-item" onclick="selCat(this)"><div class="ce">🏛️</div>Lost Civilizations</div>
+                <div class="cat-sel-item" onclick="selCat(this)"><div class="ce">🔪</div>Serial Killers</div>
+                <div class="cat-sel-item" onclick="selCat(this)"><div class="ce">🌑</div>Ancient Curses</div>
+                <div class="cat-sel-item" onclick="selCat(this)"><div class="ce">🧪</div>Forbidden Science</div>
+                <div class="cat-sel-item" onclick="selCat(this)"><div class="ce">👑</div>Dark Royals</div>
+                <div class="cat-sel-item" onclick="selCat(this)"><div class="ce">🔮</div>Secret Societies</div>
+                <div class="cat-sel-item" onclick="selCat(this)"><div class="ce">🏚️</div>Haunted Places</div>
+              </div>
+              <div class="form-group"><label class="form-label">Series Name</label><input class="form-input" placeholder="e.g. Dark History Daily" value="Dark History Facts"></div>
+              <div class="wizard-nav"><div></div><button class="btn-primary btn-sm" onclick="goWizard(2)">Next: Choose Voice →</button></div>
+            </div>
+
+            <!-- Step 2: Voice -->
+            <div class="wizard-section" id="wsec2">
+              <div class="wizard-title">Select AI Narrator Voice</div>
+              <div class="wizard-sub">Choose a voice that matches the dark, suspenseful vibe of your content.</div>
+              <div class="voice-grid">
+                <div class="voice-card selected" onclick="selVoice(this)"><div class="voice-name">🎙️ The Cryptkeeper</div><div class="voice-desc">Deep, ominous, slow-paced</div><div class="voice-play">▶ Preview</div></div>
+                <div class="voice-card" onclick="selVoice(this)"><div class="voice-name">🎙️ Shadow Narrator</div><div class="voice-desc">Mysterious, British accent</div><div class="voice-play">▶ Preview</div></div>
+                <div class="voice-card" onclick="selVoice(this)"><div class="voice-name">🎙️ Dark Oracle</div><div class="voice-desc">Female, dramatic, intense</div><div class="voice-play">▶ Preview</div></div>
+                <div class="voice-card" onclick="selVoice(this)"><div class="voice-name">🎙️ The Historian</div><div class="voice-desc">Authoritative, clear, firm</div><div class="voice-play">▶ Preview</div></div>
+                <div class="voice-card" onclick="selVoice(this)"><div class="voice-name">🎙️ Phantom Voice</div><div class="voice-desc">Whispered, eerie, haunting</div><div class="voice-play">▶ Preview</div></div>
+                <div class="voice-card" onclick="selVoice(this)"><div class="voice-name">🎙️ Blood Scribe</div><div class="voice-desc">Raspy, gritty, intense</div><div class="voice-play">▶ Preview</div></div>
+              </div>
+              <div class="form-group"><label class="form-label">Background Music</label>
+                <select class="form-select"><option>🎵 Ominous Strings (Recommended)</option><option>🎵 Dark Ambient</option><option>🎵 Suspense Build</option><option>🎵 Medieval Horror</option><option>🎵 No Music</option></select>
+              </div>
+              <div class="wizard-nav"><button class="btn-ghost btn-sm" onclick="goWizard(1)">← Back</button><button class="btn-primary btn-sm" onclick="goWizard(3)">Next: Platforms →</button></div>
+            </div>
+
+            <!-- Step 3: Platforms -->
+            <div class="wizard-section" id="wsec3">
+              <div class="wizard-title">Choose Publishing Platforms</div>
+              <div class="wizard-sub">Select where MoverseAI will auto-post your videos.</div>
+              <div class="platform-row">
+                <div class="plat-toggle on" onclick="this.classList.toggle('on')"><div class="toggle-dot"></div>🎬 YouTube Shorts</div>
+                <div class="plat-toggle on" onclick="this.classList.toggle('on')"><div class="toggle-dot"></div>🎵 TikTok</div>
+                <div class="plat-toggle on" onclick="this.classList.toggle('on')"><div class="toggle-dot"></div>📘 Facebook Reels</div>
+                <div class="plat-toggle" onclick="this.classList.toggle('on')"><div class="toggle-dot"></div>📸 Instagram Reels</div>
+              </div>
+              <div class="form-group"><label class="form-label">Video Format</label>
+                <select class="form-select"><option>Portrait 9:16 (Best for Shorts/TikTok)</option><option>Landscape 16:9</option><option>Square 1:1</option></select>
+              </div>
+              <div class="form-group"><label class="form-label">Video Length</label>
+                <select class="form-select"><option>30–45 seconds (Best for algorithm)</option><option>45–60 seconds</option><option>60–90 seconds</option></select>
+              </div>
+              <div class="wizard-nav"><button class="btn-ghost btn-sm" onclick="goWizard(2)">← Back</button><button class="btn-primary btn-sm" onclick="goWizard(4)">Next: Schedule →</button></div>
+            </div>
+
+            <!-- Step 4: Schedule -->
+            <div class="wizard-section" id="wsec4">
+              <div class="wizard-title">Set Your Posting Schedule</div>
+              <div class="wizard-sub">How often should MoverseAI generate and post videos?</div>
+              <div class="sched-options">
+                <div class="sched-opt" onclick="selSched(this)"><div class="freq">1x</div><div class="freq-lbl">Per Day</div></div>
+                <div class="sched-opt selected" onclick="selSched(this)"><div class="freq">2x</div><div class="freq-lbl">Per Day</div></div>
+                <div class="sched-opt" onclick="selSched(this)"><div class="freq">3x</div><div class="freq-lbl">Per Day</div></div>
+                <div class="sched-opt" onclick="selSched(this)"><div class="freq">4x</div><div class="freq-lbl">Per Week</div></div>
+                <div class="sched-opt" onclick="selSched(this)"><div class="freq">3x</div><div class="freq-lbl">Per Week</div></div>
+                <div class="sched-opt" onclick="selSched(this)"><div class="freq">1x</div><div class="freq-lbl">Per Week</div></div>
+              </div>
+              <div class="two-col" style="gap:1rem">
+                <div class="form-group"><label class="form-label">First Post Time</label><input type="time" class="form-input" value="12:00"></div>
+                <div class="form-group"><label class="form-label">Timezone</label><select class="form-select"><option>EST (Columbus, OH)</option><option>PST</option><option>CST</option><option>GMT</option></select></div>
+              </div>
+              <div class="wizard-nav"><button class="btn-ghost btn-sm" onclick="goWizard(3)">← Back</button><button class="btn-primary btn-sm" onclick="goWizard(5)">Next: Review →</button></div>
+            </div>
+
+            <!-- Step 5: Launch -->
+            <div class="wizard-section" id="wsec5">
+              <div class="wizard-title">🚀 Ready to Launch!</div>
+              <div class="wizard-sub">Your series is configured. MoverseAI will start generating and posting videos automatically.</div>
+              <div class="stat-card" style="margin-bottom:1rem;background:rgba(185,28,28,.07);border-color:rgba(185,28,28,.25)">
+                <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem">
+                  <div><div class="stat-lbl">Category</div><div style="font-size:.95rem;font-weight:500;margin-top:3px">⚔️ Dark History</div></div>
+                  <div><div class="stat-lbl">Voice</div><div style="font-size:.95rem;font-weight:500;margin-top:3px">🎙️ The Cryptkeeper</div></div>
+                  <div><div class="stat-lbl">Platforms</div><div style="font-size:.95rem;font-weight:500;margin-top:3px">YouTube · TikTok · Facebook</div></div>
+                  <div><div class="stat-lbl">Schedule</div><div style="font-size:.95rem;font-weight:500;margin-top:3px">2× per day at 12:00 PM</div></div>
+                </div>
+              </div>
+              <div class="form-group"><label class="form-label">Auto-post mode</label>
+                <select class="form-select"><option>✅ Auto-post immediately (Recommended)</option><option>📋 Generate & wait for my approval</option></select>
+              </div>
+              <div class="wizard-nav"><button class="btn-ghost btn-sm" onclick="goWizard(4)">← Back</button><button class="btn-primary btn-sm" onclick="launchSeries()">🚀 Launch Series</button></div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+
+      <!-- AI SCRIPT WRITER -->
+      <div class="dash-sub-page" id="dash-script">
+        <div class="page-header">
+          <div class="page-title">AI Script Writer <small>Powered by Claude AI</small></div>
+        </div>
+        <div class="script-wrap">
+          <div class="two-col" style="gap:1rem;margin-bottom:1rem">
+            <div class="form-group"><label class="form-label">Category</label>
+              <select class="form-select" id="script-cat">
+                <option>Dark History</option><option>Weird Deaths</option><option>Ancient Curses</option><option>Serial Killers</option><option>Lost Civilizations</option><option>Forbidden Science</option><option>Dark Royals</option><option>Secret Societies</option>
+              </select>
+            </div>
+            <div class="form-group"><label class="form-label">Video Length</label>
+              <select class="form-select" id="script-len">
+                <option>30 seconds (Short & punchy)</option><option>45 seconds (Standard)</option><option>60 seconds (Deep dive)</option>
+              </select>
+            </div>
+          </div>
+          <div class="form-group"><label class="form-label">Topic or Idea (optional)</label>
+            <textarea class="prompt-area" id="script-prompt" placeholder="e.g. The Black Death, ancient Egyptian curses, Jack the Ripper, the Romanov family, medieval torture devices...&#10;&#10;Leave empty for AI to choose a viral dark history topic automatically."></textarea>
+          </div>
+          <div style="display:flex;gap:.75rem;flex-wrap:wrap;margin-bottom:1.5rem">
+            <button class="btn-primary btn-sm" onclick="generateScript()">✨ Generate Script</button>
+            <button class="btn-ghost btn-sm" id="clear-script" onclick="clearScript()" style="display:none">Clear</button>
+          </div>
+          <div id="script-output" style="display:none">
+            <div class="ai-output" id="script-text"></div>
+            <div class="script-toolbar">
+              <button class="toolbar-btn primary" onclick="showToast('📤 Script saved to series!','success')">Save to Series</button>
+              <button class="toolbar-btn" onclick="generateScript()">🔄 Regenerate</button>
+              <button class="toolbar-btn" onclick="copyScript()">📋 Copy Script</button>
+              <button class="toolbar-btn" onclick="showToast('🎬 Video creation starting...','success')">🎬 Create Video from This</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- SCHEDULE -->
+      <div class="dash-sub-page" id="dash-schedule">
+        <div class="page-header">
+          <div class="page-title">Schedule <small>This week's auto-post calendar</small></div>
+          <button class="btn-primary btn-sm" onclick="showToast('📅 Post added to schedule!','success')">+ Add Post</button>
+        </div>
+        <div class="schedule-grid">
+          <div class="sched-day-header">Mon</div>
+          <div class="sched-day-header">Tue</div>
+          <div class="sched-day-header">Wed</div>
+          <div class="sched-day-header">Thu</div>
+          <div class="sched-day-header">Fri</div>
+          <div class="sched-day-header">Sat</div>
+          <div class="sched-day-header">Sun</div>
+
+          <div class="sched-slot"><div class="slot-time">12:00 PM</div><div class="sched-item yt">YT · Dark History</div><div class="sched-item">TT · Weird Deaths</div></div>
+          <div class="sched-slot"><div class="slot-time">12:00 PM</div><div class="sched-item fb">FB · Dark History</div></div>
+          <div class="sched-slot"><div class="slot-time">12:00 PM</div><div class="sched-item yt">YT · Ancient Curses</div><div class="sched-item">TT · Dark History</div></div>
+          <div class="sched-slot"><div class="slot-time">12:00 PM</div><div class="sched-item fb">FB · Serial Killers</div></div>
+          <div class="sched-slot"><div class="slot-time">12:00 PM</div><div class="sched-item yt">YT · Weird Deaths</div></div>
+          <div class="sched-slot"><div class="slot-time">12:00 PM</div><div class="sched-item">TT · Dark History</div></div>
+          <div class="sched-slot"><div class="slot-time">—</div></div>
+
+          <div class="sched-slot"><div class="slot-time">7:00 PM</div><div class="sched-item yt">YT · Lost Civilizations</div></div>
+          <div class="sched-slot"><div class="slot-time">7:00 PM</div><div class="sched-item">TT · Ancient Curses</div></div>
+          <div class="sched-slot"><div class="slot-time">7:00 PM</div><div class="sched-item fb">FB · Weird Deaths</div></div>
+          <div class="sched-slot"><div class="slot-time">7:00 PM</div><div class="sched-item yt">YT · Dark History</div><div class="sched-item">TT · Serial Killers</div></div>
+          <div class="sched-slot"><div class="slot-time">9:00 PM</div><div class="sched-item fb">FB · Dark History</div><div class="sched-item yt">YT · Forbidden Sci.</div></div>
+          <div class="sched-slot"><div class="slot-time">9:00 PM</div><div class="sched-item">TT · Haunted Places</div></div>
+          <div class="sched-slot"><div class="slot-time">—</div></div>
+        </div>
+      </div>
+
+      <!-- CHANNELS -->
+      <div class="dash-sub-page" id="dash-channels">
+        <div class="page-header">
+          <div class="page-title">Connected Channels <small>3 of 5 channels connected</small></div>
+        </div>
+        <div class="channel-grid">
+          <div class="channel-card">
+            <div class="channel-top"><div class="ch-icon ch-yt">📺</div><div><div class="ch-name">YouTube</div><div class="ch-handle">@dark.history.ai</div></div></div>
+            <div class="ch-stats"><div class="ch-stat"><div class="ch-stat-val">48.2K</div><div class="ch-stat-lbl">Subscribers</div></div><div class="ch-stat"><div class="ch-stat-val">1.4M</div><div class="ch-stat-lbl">Total Views</div></div><div class="ch-stat"><div class="ch-stat-val">142</div><div class="ch-stat-lbl">Videos</div></div></div>
+            <button class="connect-btn connected">✓ Connected</button>
+          </div>
+          <div class="channel-card">
+            <div class="channel-top"><div class="ch-icon ch-tt">🎵</div><div><div class="ch-name">TikTok</div><div class="ch-handle">@moverseai_dark</div></div></div>
+            <div class="ch-stats"><div class="ch-stat"><div class="ch-stat-val">32.1K</div><div class="ch-stat-lbl">Followers</div></div><div class="ch-stat"><div class="ch-stat-val">890K</div><div class="ch-stat-lbl">Total Views</div></div><div class="ch-stat"><div class="ch-stat-val">98</div><div class="ch-stat-lbl">Videos</div></div></div>
+            <button class="connect-btn connected">✓ Connected</button>
+          </div>
+          <div class="channel-card">
+            <div class="channel-top"><div class="ch-icon ch-fb">📘</div><div><div class="ch-name">Facebook</div><div class="ch-handle">Dark History AI Page</div></div></div>
+            <div class="ch-stats"><div class="ch-stat"><div class="ch-stat-val">21.8K</div><div class="ch-stat-lbl">Followers</div></div><div class="ch-stat"><div class="ch-stat-val">450K</div><div class="ch-stat-lbl">Total Views</div></div><div class="ch-stat"><div class="ch-stat-val">67</div><div class="ch-stat-lbl">Videos</div></div></div>
+            <button class="connect-btn connected">✓ Connected</button>
+          </div>
+          <div class="add-channel" onclick="showToast('📸 Instagram connection coming soon!','success')">
+            <div style="font-size:1.8rem">+</div>
+            <div>Connect Instagram</div>
+            <div style="font-size:.75rem;color:var(--dim)">Coming Soon</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ANALYTICS -->
+      <div class="dash-sub-page" id="dash-analytics">
+        <div class="page-header">
+          <div class="page-title">Analytics <small>Last 7 days performance</small></div>
+          <select class="form-select" style="width:auto;font-size:.82rem;padding:.45rem .9rem">
+            <option>Last 7 days</option><option>Last 30 days</option><option>Last 90 days</option>
+          </select>
+        </div>
+        <div class="stats-row">
+          <div class="stat-card"><div class="stat-lbl">Total Views</div><div class="stat-val">284K</div><div class="stat-change up">↑ 23%</div></div>
+          <div class="stat-card"><div class="stat-lbl">Watch Time</div><div class="stat-val">14.2K</div><div class="stat-change up">↑ 18% hrs</div></div>
+          <div class="stat-card"><div class="stat-lbl">New Followers</div><div class="stat-val">2.1K</div><div class="stat-change up">↑ 41%</div></div>
+          <div class="stat-card"><div class="stat-lbl">Videos Posted</div><div class="stat-val">42</div><div class="stat-change neutral">This week</div></div>
+        </div>
+        <div class="analytics-grid">
+          <div class="ana-card">
+            <h3>Views This Week</h3>
+            <div class="chart-bars" id="ana-chart"></div>
+          </div>
+          <div class="ana-card">
+            <h3>Top Videos</h3>
+            <ul class="top-videos">
+              <li class="top-vid-item"><div class="vid-rank">#1</div><div class="vid-title">The Darkest Secret of Pharaohs</div><div class="vid-views">42K</div></li>
+              <li class="top-vid-item"><div class="vid-rank">#2</div><div class="vid-title">Weird Deaths in the 1800s</div><div class="vid-views">34K</div></li>
+              <li class="top-vid-item"><div class="vid-rank">#3</div><div class="vid-title">Medieval Torture Nobody Talks About</div><div class="vid-views">28K</div></li>
+              <li class="top-vid-item"><div class="vid-rank">#4</div><div class="vid-title">The Curse of Tutankhamun</div><div class="vid-views">21K</div></li>
+              <li class="top-vid-item"><div class="vid-rank">#5</div><div class="vid-title">Jack the Ripper: The Real Story</div><div class="vid-views">19K</div></li>
+            </ul>
+          </div>
+        </div>
+        <div class="ana-card" style="margin-top:1.5rem">
+          <h3>Platform Breakdown</h3>
+          <div class="plat-breakdown" style="margin-top:1rem">
+            <div class="plat-row" style="display:flex;align-items:center;gap:12px;margin-bottom:.75rem"><div class="plat-name">YouTube</div><div class="plat-bar-bg"><div class="plat-bar-fill" style="width:60%;background:var(--red);"></div></div><div class="plat-pct">60%</div></div>
+            <div class="plat-row" style="display:flex;align-items:center;gap:12px;margin-bottom:.75rem"><div class="plat-name">TikTok</div><div class="plat-bar-bg"><div class="plat-bar-fill" style="width:28%;background:var(--purple2);"></div></div><div class="plat-pct">28%</div></div>
+            <div class="plat-row" style="display:flex;align-items:center;gap:12px"><div class="plat-name">Facebook</div><div class="plat-bar-bg"><div class="plat-bar-fill" style="width:12%;background:var(--blue2);"></div></div><div class="plat-pct">12%</div></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- SETTINGS -->
+      <div class="dash-sub-page" id="dash-settings">
+        <div class="page-header">
+          <div class="page-title">Settings</div>
+        </div>
+        <div class="settings-grid">
+          <div class="settings-nav">
+            <div class="snav-item active" onclick="showSettings('profile',this)">Profile</div>
+            <div class="snav-item" onclick="showSettings('notifications',this)">Notifications</div>
+            <div class="snav-item" onclick="showSettings('billing',this)">Billing</div>
+            <div class="snav-item" onclick="showSettings('api',this)">API & Integrations</div>
+          </div>
+          <div>
+            <div class="settings-panel active" id="set-profile">
+              <div class="settings-section">
+                <h3>Profile Information</h3>
+                <div class="form-group"><label class="form-label">Display Name</label><input class="form-input" value="Dark History Creator"></div>
+                <div class="form-group"><label class="form-label">Email</label><input class="form-input" value="creator@moverseai.com" type="email"></div>
+                <div class="form-group"><label class="form-label">Primary Niche</label><select class="form-select"><option selected>Dark History</option><option>Weird Deaths</option><option>Serial Killers</option></select></div>
+                <button class="save-btn" onclick="showToast('✓ Profile saved!','success')">Save Changes</button>
+              </div>
+              <div class="settings-section">
+                <h3>Preferences</h3>
+                <div class="setting-row"><div class="setting-info"><h4>Auto-post without approval</h4><p>Post videos automatically without reviewing first</p></div><div class="toggle-switch on" onclick="this.classList.toggle('on')"></div></div>
+                <div class="setting-row"><div class="setting-info"><h4>AI hashtag generation</h4><p>Automatically add trending hashtags to every post</p></div><div class="toggle-switch on" onclick="this.classList.toggle('on')"></div></div>
+                <div class="setting-row"><div class="setting-info"><h4>Watermark on videos</h4><p>Add your channel name to all generated videos</p></div><div class="toggle-switch" onclick="this.classList.toggle('on')"></div></div>
+              </div>
+            </div>
+            <div class="settings-panel" id="set-notifications">
+              <div class="settings-section">
+                <h3>Notification Preferences</h3>
+                <div class="setting-row"><div class="setting-info"><h4>Video posted successfully</h4><p>Get notified when a video is auto-posted</p></div><div class="toggle-switch on" onclick="this.classList.toggle('on')"></div></div>
+                <div class="setting-row"><div class="setting-info"><h4>Weekly analytics report</h4><p>Receive weekly performance summary via email</p></div><div class="toggle-switch on" onclick="this.classList.toggle('on')"></div></div>
+                <div class="setting-row"><div class="setting-info"><h4>Viral video alert</h4><p>Alert when a video hits 10K+ views</p></div><div class="toggle-switch on" onclick="this.classList.toggle('on')"></div></div>
+                <div class="setting-row"><div class="setting-info"><h4>Posting failures</h4><p>Notify if a scheduled post fails</p></div><div class="toggle-switch on" onclick="this.classList.toggle('on')"></div></div>
+                <button class="save-btn" style="margin-top:1rem" onclick="showToast('✓ Notifications saved!','success')">Save Changes</button>
+              </div>
+            </div>
+            <div class="settings-panel" id="set-billing">
+              <div class="settings-section">
+                <h3>Current Plan</h3>
+                <div style="display:flex;justify-content:space-between;align-items:center;padding:1rem;background:rgba(185,28,28,.07);border:1px solid rgba(185,28,28,.2);border-radius:10px;margin-bottom:1rem">
+                  <div><div style="font-size:1rem;font-weight:600">Creator Plan</div><div style="font-size:.82rem;color:var(--muted)">$29/month · Renews Jun 9, 2026</div></div>
+                  <span class="tag tag-red">Active</span>
+                </div>
+                <button class="save-btn" onclick="showToast('💎 Upgrade to Pro for $79/mo!','success')">Upgrade to Pro</button>
+              </div>
+              <div class="settings-section">
+                <h3>Usage This Month</h3>
+                <div class="setting-row"><div class="setting-info"><h4>Videos Generated</h4><p>Unlimited on Creator plan</p></div><div style="font-size:.9rem;font-weight:600">142 / ∞</div></div>
+                <div class="setting-row"><div class="setting-info"><h4>Active Series</h4><p>6 max on Creator plan</p></div><div style="font-size:.9rem;font-weight:600">6 / 6</div></div>
+              </div>
+            </div>
+            <div class="settings-panel" id="set-api">
+              <div class="settings-section">
+                <h3>API Key</h3>
+                <div class="form-group"><label class="form-label">Your MoverseAI API Key</label><input class="form-input" value="mvai_live_sk_••••••••••••••••" readonly style="font-family:monospace;font-size:.82rem"></div>
+                <button class="save-btn" onclick="showToast('🔑 New API key generated!','success')">Regenerate Key</button>
+              </div>
+              <div class="settings-section">
+                <h3>Connected Apps</h3>
+                <div class="setting-row"><div class="setting-info"><h4>Zapier</h4><p>Automate workflows with 3000+ apps</p></div><button class="connect-btn" style="width:auto;padding:.4rem 1rem" onclick="showToast('🔗 Zapier integration page coming soon!','success')">Connect</button></div>
+                <div class="setting-row"><div class="setting-info"><h4>Make (Integromat)</h4><p>Advanced automation scenarios</p></div><button class="connect-btn" style="width:auto;padding:.4rem 1rem" onclick="showToast('🔗 Make integration page coming soon!','success')">Connect</button></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </main>
+  </div>
+</div>
+
+<script>
+// ── Page routing ──
+function showPage(name) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.getElementById('page-' + name).classList.add('active');
+  const isDash = name === 'dashboard';
+  document.getElementById('nav-auth-btns').style.display = isDash ? 'none' : 'flex';
+  document.getElementById('nav-dash-btns').style.display = isDash ? 'flex' : 'none';
+  document.getElementById('landing-nav').style.display = isDash ? 'none' : 'flex';
+  window.scrollTo(0, 0);
+}
+
+// ── Dashboard sub-pages ──
+function showDash(name) {
+  showPage('dashboard');
+  document.querySelectorAll('.dash-sub-page').forEach(p => p.classList.remove('active'));
+  document.getElementById('dash-' + name).classList.add('active');
+  document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+  const navEl = document.getElementById('nav-' + name);
+  if (navEl) navEl.classList.add('active');
+  if (name === 'analytics') buildChart();
+}
+
+// ── Auth tabs ──
+function switchAuthTab(tab) {
+  document.getElementById('tab-signin').classList.toggle('active', tab === 'signin');
+  document.getElementById('tab-signup').classList.toggle('active', tab === 'signup');
+  document.getElementById('form-signin').style.display = tab === 'signin' ? 'block' : 'none';
+  document.getElementById('form-signup').style.display = tab === 'signup' ? 'block' : 'none';
+}
+
+function doSignIn() {
+  showToast('✓ Welcome to MoverseAI!', 'success');
+  setTimeout(() => showPage('dashboard'), 600);
+}
+
+// ── Toast ──
+function showToast(msg, type = '') {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.className = 'toast show ' + type;
+  clearTimeout(t._to);
+  t._to = setTimeout(() => t.classList.remove('show'), 3200);
+}
+
+// ── Wizard ──
+function goWizard(step) {
+  for (let i = 1; i <= 5; i++) {
+    const ws = document.getElementById('ws' + i);
+    const sec = document.getElementById('wsec' + i);
+    ws.classList.remove('active', 'done');
+    sec.classList.remove('active');
+    if (i < step) ws.classList.add('done');
+  }
+  document.getElementById('ws' + step).classList.add('active');
+  document.getElementById('wsec' + step).classList.add('active');
+}
+
+function selCat(el) {
+  el.closest('.cat-select-grid').querySelectorAll('.cat-sel-item').forEach(e => e.classList.remove('selected'));
+  el.classList.add('selected');
+}
+function selVoice(el) {
+  el.closest('.voice-grid').querySelectorAll('.voice-card').forEach(e => e.classList.remove('selected'));
+  el.classList.add('selected');
+}
+function selSched(el) {
+  el.closest('.sched-options').querySelectorAll('.sched-opt').forEach(e => e.classList.remove('selected'));
+  el.classList.add('selected');
+}
+function launchSeries() {
+  showToast('🚀 Series launched! First video generating...', 'success');
+  setTimeout(() => showDash('series'), 800);
+}
+
+// ── AI Script Generator (Claude API) ──
+async function generateScript() {
+  const cat = document.getElementById('script-cat').value;
+  const len = document.getElementById('script-len').value;
+  const topic = document.getElementById('script-prompt').value.trim();
+  const outEl = document.getElementById('script-output');
+  const textEl = document.getElementById('script-text');
+  outEl.style.display = 'block';
+  textEl.innerHTML = '<div class="ai-loading"><div class="ai-dot"></div><div class="ai-dot"></div><div class="ai-dot"></div><span>MoverseAI is writing your script...</span></div>';
+  const systemPrompt = `You are MoverseAI, an expert dark history content writer for viral YouTube Shorts, TikTok, and Facebook Reels. You write compelling, suspenseful, hook-driven scripts for faceless history channels. Your scripts are dramatic, eerie, and keep viewers glued to the screen. Format: Start with a HOOK (first 3 seconds), then STORY (build suspense), then REVEAL (shocking ending). Include [PAUSE] markers, visual cues in brackets like [SHOW: dark image of X], and end with a cliffhanger or call-to-action. Write for ${len} video length.`;
+  const userMsg = topic
+    ? `Write a dark history script about: ${topic}\nCategory: ${cat}\nMake it viral, eerie, and suspenseful.`
+    : `Pick the most viral dark history topic for the "${cat}" category right now and write a compelling short video script. Make it shocking, eerie, and impossible to stop watching.`;
+  try {
+    const res = await fetch('https://api.anthropic.com/v1/messages', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        model: 'claude-sonnet-4-20250514',
+        max_tokens: 1000,
+        system: systemPrompt,
+        messages: [{ role: 'user', content: userMsg }]
+      })
+    });
+    const data = await res.json();
+    const text = data.content?.[0]?.text || 'Error generating script. Please try again.';
+    textEl.textContent = text;
+    document.getElementById('clear-script').style.display = 'inline-block';
+  } catch (e) {
+    textEl.textContent = '⚠️ Could not connect to AI. Please check your connection and try again.';
+  }
+}
+
+function clearScript() {
+  document.getElementById('script-output').style.display = 'none';
+  document.getElementById('script-prompt').value = '';
+  document.getElementById('clear-script').style.display = 'none';
+}
+
+function copyScript() {
+  const text = document.getElementById('script-text').textContent;
+  navigator.clipboard.writeText(text).then(() => showToast('📋 Script copied to clipboard!', 'success'));
+}
+
+// ── Analytics Chart ──
+function buildChart() {
+  const c = document.getElementById('ana-chart');
+  if (!c || c.children.length > 0) return;
+  const days = ['Mon','Tue','Wed','Thu','Fri','Sat','Sun'];
+  const vals = [32,41,28,55,48,62,38];
+  const max = Math.max(...vals);
+  c.innerHTML = '';
+  days.forEach((d, i) => {
+    const wrap = document.createElement('div');
+    wrap.className = 'bar-wrap';
+    const bar = document.createElement('div');
+    bar.className = 'bar';
+    bar.style.height = Math.round((vals[i]/max)*100) + '%';
+    bar.title = vals[i] + 'K views';
+    const lbl = document.createElement('div');
+    lbl.className = 'bar-lbl';
+    lbl.textContent = d;
+    lbl.style.position = 'absolute';
+    lbl.style.bottom = '-1.4rem';
+    lbl.style.fontSize = '.62rem';
+    lbl.style.color = 'var(--dim)';
+    bar.style.position = 'relative';
+    bar.appendChild(lbl);
+    wrap.appendChild(bar);
+    c.appendChild(wrap);
+  });
+}
+
+// ── Settings panels ──
+function showSettings(name, el) {
+  document.querySelectorAll('.settings-panel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.snav-item').forEach(n => n.classList.remove('active'));
+  document.getElementById('set-' + name).classList.add('active');
+  el.classList.add('active');
+}
+
+// ── Smooth scroll (landing) ──
+function scrollTo(id) {
+  document.querySelector(id)?.scrollIntoView({ behavior: 'smooth' });
+}
+</script>
+</body>
+</html>
